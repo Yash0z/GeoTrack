@@ -1,0 +1,16 @@
+{
+  "name": "backend",
+  "module": "server.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "^1.1.10"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "dev": "bun run server.ts",
+    "build": "tsc",
+    "start": "bun run build/server.js"
+  }
+}

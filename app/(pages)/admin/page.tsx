@@ -1,5 +1,5 @@
-import { redirect } from "next/navigation"; 
-import { validateRequest } from "@/lib/auth";
+import { redirect } from "next/navigation";
+import { validateRequest } from "@/lib/lucia/auth";
 import Dashboard from "@/components/DashBoard";
 
 export default async function AdminPage() {

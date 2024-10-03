@@ -1,5 +1,5 @@
 import { Lucia } from "lucia"
-import adapter from "@/db/adapter"
+import adapter from "@/lib/lucia/adapter"
 import { cookies } from "next/headers"
 import { cache } from "react"
 

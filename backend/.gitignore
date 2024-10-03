@@ -129,4 +129,4 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-drizzle.config.ts
+bun.lockb
