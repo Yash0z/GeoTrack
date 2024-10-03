@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
-export default function Navbar() {
+export default function HomeNav() {
 	return (
 		<nav className='inset-0 fixed h-20 z-10 bg-background border-b w-full'>
 			<div className=' mx-auto px-4 sm:px-6 lg:px-8 w-full'>

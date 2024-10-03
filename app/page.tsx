@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Map } from "lucide-react";
-import Navbar from "@/components/navigation";
+import Navbar from "@/components/HomeNav";
 import React from "react";
 import { SignUpForm } from "@/components/SignUpForm";
 export default function Component() {
