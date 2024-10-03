@@ -1,7 +1,7 @@
 "use server";
 
 import db from "@/backend/src/db";
-import { lucia } from "@/lib/lucia/auth";
+import { lucia, validateRequest } from "@/lib/lucia/auth";
 import { userTable } from "@/backend/src/schema/schema";
 import { SignUpSchema ,LoginSchema} from "@/types";
 import { generateId } from "lucia";
@@ -9,6 +9,7 @@ import { cookies } from "next/headers";
 import { z } from "zod";
 import bcrypt from "bcrypt";
 import { eq } from "drizzle-orm";
+import { redirect } from "next/navigation";
 
 export interface SignUpResponse {
    success?: boolean;  
@@ -115,3 +116,27 @@ export const SignIn = async (values: z.infer<typeof LoginSchema>) => {
       };
    }
 };
+
+
+export const signOut = async (): Promise<void> => {
+   try {
+     const { session } = await validateRequest();
+     
+     if (!session) {
+       console.error("Unauthorized");
+       return; 
+     }
+ 
+     // Invalidate the session
+     await lucia.invalidateSession(session.id);
+ 
+     // Create and set a blank session cookie
+     const sessionCookie = lucia.createBlankSessionCookie();
+     cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+ 
+   } catch (error: any) {
+     console.error("Sign-out failed:", error?.message);
+   }
+   redirect("/login")
+ };
+ 
