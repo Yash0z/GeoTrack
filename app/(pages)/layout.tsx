@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { Toaster } from "@/components/ui/toaster";
 import Navbar from "@/components/Navbar";
 import { validateRequest } from "@/lib/lucia/auth";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
 	title: "GeoTrack",
@@ -23,6 +24,7 @@ export default async function HomeLayout({
 			<Navbar />
 			<main>{children}</main>
 			<Toaster />
+			<Footer />
 		</div>
 	);
 }

@@ -4,7 +4,13 @@ import { Map } from "lucide-react";
 import Navbar from "@/components/HomeNav";
 import React from "react";
 import { LoginForm } from "@/components/LoginForm";
-export default function Component() {
+import { validateRequest } from "@/lib/lucia/auth";
+import { redirect } from "next/navigation";
+export default async function Component() {
+	const { user } = await validateRequest();
+	if (user) {
+		redirect("/admin");
+	}
 	return (
 		<>
 			{/* <Navbar/> */}

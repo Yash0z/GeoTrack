@@ -40,7 +40,7 @@ export function LoginForm() {
 			console.log(res.error);
 			toast({
 				variant: "destructive",
-				description: "Something Went Wrong",
+				description: "Invalid Credentials",
 			});
 		} else if (res.success) {
 			toast({
