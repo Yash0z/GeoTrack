@@ -38,6 +38,7 @@ export const SignUp = async (values: z.infer<typeof SignUpSchema>):Promise<SignU
          id: userID,
          username: values.username,
          hashedPassword,
+         email:values.email,
          role:values.role 
       })
       .returning({

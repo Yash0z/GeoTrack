@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { Input } from "@/components/ui/input";
 
-
+// Assuming you have a types.ts or similar file
+ 
 
 export const SignUpSchema = z.object({
 	username: z.string().min(2).max(50),

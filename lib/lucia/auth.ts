@@ -1,56 +1,65 @@
-import { Lucia } from "lucia"
-import adapter from "@/lib/lucia/adapter"
-import { cookies } from "next/headers"
-import { cache } from "react"
+import { Lucia } from "lucia";
+import adapter from "@/lib/lucia/adapter";
+import { cookies } from "next/headers";
+import { cache } from "react";
+import db from "@/backend/src/db";
 
+// Existing Lucia setup
 export const lucia = new Lucia(adapter, {
   sessionCookie: {
     attributes: {
-      // set to `true` when using HTTPS
       secure: process.env.NODE_ENV === "production",
     },
   },
-})
+});
 
-export const validateRequest = cache(async () => {
-  const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null
+// User interface definition
+export interface User {
+  id: string;              
+  name?: string | null;  
+  email?: string | null;   
+  username?: string | null; 
+}
 
-  if (!sessionId)
+// Session interface
+export interface Session {
+  id: string;
+  fresh: boolean;
+}
+
+
+// Validate request function
+export const validateRequest = cache(async (): Promise<{ user: User; session: Session } | { user: null; session: null }> => {
+  const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null;
+
+  if (!sessionId) {
     return {
       user: null,
       session: null,
-    }
+    };
+  }
 
-  const { user, session } = await lucia.validateSession(sessionId)
+  const result = await lucia.validateSession(sessionId);
+  console.log("Validation result:", result); 
+
   try {
-    if (session && session.fresh) {
-      const sessionCookie = lucia.createSessionCookie(session.id)
-      cookies().set(
-        sessionCookie.name,
-        sessionCookie.value,
-        sessionCookie.attributes
-      )
+    if (result.session && result.session.fresh) {
+      const sessionCookie = lucia.createSessionCookie(result.session.id);
+      cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+    } else if (result.session) {
+      const sessionCookie = lucia.createBlankSessionCookie();
+      cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
     }
-    if (!session) {
-      const sessionCookie = lucia.createBlankSessionCookie()
-      cookies().set(
-        sessionCookie.name,
-        sessionCookie.value,
-        sessionCookie.attributes
-      )
-    }
-  } catch {
-    // Next.js throws error when attempting to set cookies when rendering page
+  } catch (error) {
+    console.error("Error setting cookies:", error);
   }
-  return {
-    user,
-    session,
-  }
-})
+
+  return result
+});
 
 // IMPORTANT!
 declare module "lucia" {
   interface Register {
-    Lucia: typeof lucia
+    Lucia: typeof lucia;
   }
 }

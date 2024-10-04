@@ -1,4 +1,3 @@
-"use client";
 
 import Link from "next/link";
 import {
@@ -14,6 +13,7 @@ import { Map, Settings, LogOut, Bell } from "lucide-react";
 import React from "react";
 import { signOut } from "@/actions/auth.actions";
 import { Button } from "./ui/button";
+import UserProfile from "./Profile";
 
 export default function Navbar() {
 	return (
@@ -45,14 +45,7 @@ export default function Navbar() {
 							forceMount
 						>
 							<DropdownMenuLabel className='font-normal'>
-								<div className='flex flex-col space-y-2'>
-									<p className='text-lg font-medium  leading-none'>
-										John Doe
-									</p>
-									<p className='text-sm leading-none text-muted-foreground'>
-										john@example.com
-									</p>
-								</div>
+								<UserProfile/>
 							</DropdownMenuLabel>
 							<DropdownMenuSeparator />
 							<DropdownMenuItem>
