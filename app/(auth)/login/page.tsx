@@ -54,7 +54,7 @@ export default function Component() {
 						<LoginForm />
 						<h6 className=' text-center m-4 font-ClashGrotex'>
 							<Link className='underline' href='/'>
-								Already have an account?
+								Don't have an account?
 							</Link>
 						</h6>
 						{/* terms */}
