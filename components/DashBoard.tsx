@@ -31,23 +31,29 @@ import {
 	Calendar,
 } from "lucide-react";
 import Navbar from "./Navbar";
+import ClassForm from "./ClasssForm";
 
 export default function Dashboard() {
+	const [isformOpen, setFormOpen] = useState(false);
 	return (
 		<div className='flex flex-col min-h-screen'>
-			<main className='flex-1 py-6 px-4 lg:px-8'>
-				<div className='flex justify-between items-center mb-6'>
+			{/* dashboard */}
+			<main className='flex-1 py-6 px-4 lg:px-8 font-ClashGrotex'>
+				{/* heading bar */}
+				<div className='flex justify-between items-center mb-6 '>
 					<h1 className='text-2xl font-bold'>Dashboard</h1>
 					<div className='flex items-center gap-4'>
 						<div className='relative'>
 							<Search className='absolute left-2 top-2.5 h-4 w-4 text-muted-foreground' />
 							<Input placeholder='Search classes' className='pl-8' />
 						</div>
-						<Button>
+						<Button onClick={() => setFormOpen(true)}>
 							<Plus className='mr-2 h-4 w-4' /> Create Class
 						</Button>
 					</div>
 				</div>
+				<ClassForm open={isformOpen} onFormOpen={setFormOpen} />
+				{/* Classes */}
 			</main>
 		</div>
 	);

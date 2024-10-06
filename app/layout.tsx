@@ -4,6 +4,7 @@ import "./globals.css";
 // LOCAL FONTS
 import localFont from "next/font/local";
 import { Toaster } from "@/components/ui/toaster";
+import Footer from "@/components/Footer";
 const ClashGrotesk = localFont({
 	src: "../public/fonts/ClashGrotesk-Regular.woff2",
 	variable: "--font-ClashGrotesk",
