@@ -26,8 +26,6 @@ const getUser = async () => {
     // If user is found, return their data
     if (userResult.length > 0) {
       const { username, email } = userResult[0];
-      console.log(username); 
-      console.log(email); 
       return { username, email };
     }
 

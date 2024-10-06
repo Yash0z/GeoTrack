@@ -31,7 +31,7 @@ import {
 	Calendar,
 } from "lucide-react";
 import Navbar from "./Navbar";
-import ClassForm from "./ClasssForm";
+import CreateClass from "./CreateClass";
 
 export default function Dashboard() {
 	const [isformOpen, setFormOpen] = useState(false);
@@ -52,7 +52,7 @@ export default function Dashboard() {
 						</Button>
 					</div>
 				</div>
-				<ClassForm open={isformOpen} onFormOpen={setFormOpen} />
+				<CreateClass open={isformOpen} onFormOpen={setFormOpen} />
 				{/* Classes */}
 			</main>
 		</div>

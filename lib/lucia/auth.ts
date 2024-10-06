@@ -40,7 +40,6 @@ export const validateRequest = cache(async (): Promise<{ user: User; session: Se
   }
 
   const result = await lucia.validateSession(sessionId);
-  console.log("Validation result:", result); 
 
   try {
     if (result.session && result.session.fresh) {
@@ -51,7 +50,7 @@ export const validateRequest = cache(async (): Promise<{ user: User; session: Se
       cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
     }
   } catch (error) {
-    console.error("Error setting cookies:", error);
+   
   }
 
   return result
