@@ -1,21 +1,12 @@
-/// <reference types="bun-types" />
+import { Hono } from 'hono'
+import classRoute from "./routes/newclass"
+const app = new Hono()
+app.get('/', (c) => c.text('Hello Bun!'))
 
-const server = Bun.serve({
-   port: 3000,
-   fetch(req: { url: string | URL; }) {
-     const url = new URL(req.url);
- 
-     if (url.pathname === "/") {
-       return new Response("Hello from the root route!");
-     } else if (url.pathname === "/api") {
-       return new Response(JSON.stringify({ message: "Hello from API!" }), {
-         headers: { "Content-Type": "application/json" },
-       });
-     } else {
-       return new Response("Not Found", { status: 404 });
-     }
-   },
- });
- 
- console.log(`Listening on http://localhost:${server.port} ...`);
- 
+app.route('/api/newclass',classRoute)
+
+export default app
+
+function logger(): import("hono").MiddlewareHandler<import("hono/types").BlankEnv, "*", {}> {
+   throw new Error('Function not implemented.')
+}

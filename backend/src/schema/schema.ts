@@ -1,4 +1,4 @@
-import { pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { pgEnum, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 
 
 export const userRoles = pgEnum('role', ['User', 'Admin']);
@@ -23,5 +23,12 @@ export const sessionTable = pgTable("session", {
 	}).notNull()
 });
 
+export const ClassesTable = pgTable('session', {
+   id: uuid('id').defaultRandom().primaryKey(),  // UUID auto-generation
+   AuthorID: text('AuthorID').notNull(),
+   classname: text('classname').notNull(),
+   description: text('description'),
+ });
+ 
 
 
