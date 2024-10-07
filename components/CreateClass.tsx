@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/form";
 import { z } from "zod";
 import { CreateClassSchema } from "@/types";
+import { LocateFixed } from "lucide-react";
 // Props for the class form
 interface CreateClassProps {
 	open: boolean;
@@ -77,7 +78,7 @@ export default function CreateClass({ open, onFormOpen }: CreateClassProps) {
 								name='classname'
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel className='font-ClashGrotex text-lg'>
+										<FormLabel className='font-ClashGrotex text-xl'>
 											Classname
 										</FormLabel>
 										<FormControl>
@@ -95,7 +96,7 @@ export default function CreateClass({ open, onFormOpen }: CreateClassProps) {
 								name='description'
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel className='font-ClashGrotex text-lg'>
+										<FormLabel className='font-ClashGrotex text-xl'>
 											Description
 										</FormLabel>
 										<FormControl>
@@ -108,8 +109,28 @@ export default function CreateClass({ open, onFormOpen }: CreateClassProps) {
 									</FormItem>
 								)}
 							/>
+							{/* map selector */}
+							<div className='flex items-center  gap-5'>
+								<Label className='font-ClashGrotex text-xl '>
+									Location
+								</Label>
+								<Button
+                        variant="outline"
+									onClick={() => {
+										setMapOpen(true);
+									}}
+									className='w-60 p-3 font-ClashGrotex text-lg'
+								>
+									<LocateFixed />
+									<span className="m-2 text-lg">Select on map</span>
+								</Button>
+							</div>
+
 							<div className='relative w-full'>
-								<Button type='submit' className='w-full'>
+								<Button
+									type='submit'
+									className='w-full font-ClashGrotex text-lg'
+								>
 									Save Class
 								</Button>
 							</div>
