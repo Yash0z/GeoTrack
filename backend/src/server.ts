@@ -1,12 +1,6 @@
-import { Hono } from 'hono'
-import classRoute from "./routes/newclass"
-const app = new Hono()
-app.get('/', (c) => c.text('Hello Bun!'))
+import { Hono } from "hono";
 
-app.route('/api/newclass',classRoute)
+const app = new Hono();
+app.get("/", (c) => c.text("Hello Bun!"));
 
-export default app
-
-function logger(): import("hono").MiddlewareHandler<import("hono/types").BlankEnv, "*", {}> {
-   throw new Error('Function not implemented.')
-}
+export default app;
