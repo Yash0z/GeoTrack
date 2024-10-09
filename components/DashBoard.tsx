@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -12,26 +11,11 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuSeparator,
-	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-	Map,
 	Plus,
-	Settings,
-	LogOut,
-	Bell,
 	Search,
-	AlertTriangle,
-	Calendar,
 } from "lucide-react";
-import Navbar from "./Navbar";
-import CreateClass from "./CreateClass";
+
+import CreateClass from "./forms/CreateClass";
 
 export default function Dashboard() {
 	const [isformOpen, setFormOpen] = useState(false);

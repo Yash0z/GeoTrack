@@ -1,21 +1,13 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Map } from "lucide-react";
-import Navbar from "@/components/HomeNav";
+import HomeNav from "@/components/HomeNav";
 import React from "react";
-import { LoginForm } from "@/components/forms/LoginForm";
-import { redirect } from "next/navigation";
-import getUser from "@/hooks/getUser";
-
-
-export default async function Component() {
-	const { id } = await getUser();
-	if (!id) {
-		redirect("/admin");
-	}
+import { SignUpForm } from "@/components/forms/SignUpForm";
+export default function LandingPage() {
 	return (
 		<>
-			{/* <Navbar/> */}
+			{/* <HomeNav/> */}
 			<div className='flex  justify-center min-h-screen bg-background'>
 				<div className='flex relative flex-col items-center  justify-center  md:p-16 lg:w-1/2'>
 					<h1 className=' flex font-Satoshi absolute top-16  text-4xl gap-2  '>
@@ -59,10 +51,10 @@ export default async function Component() {
 						<div className='font-Euclid text-center my-5 text-md'>OR</div>
 
 						{/* signup form */}
-						<LoginForm />
+						<SignUpForm />
 						<h6 className=' text-center m-4 font-ClashGrotex'>
-							<Link className='underline' href='/'>
-								Don't have an account?
+							<Link className='underline' href='/login'>
+								Already have an account?
 							</Link>
 						</h6>
 						{/* terms */}

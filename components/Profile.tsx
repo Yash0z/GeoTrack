@@ -1,23 +1,22 @@
-import db from "@/backend/src/db";
-import { userTable } from "@/backend/src/schema/schema";
-import getUser from "@/lib/getUser";
-import { validateRequest } from "@/lib/lucia/auth";
-import { eq } from "drizzle-orm";
+import getUser from "@/hooks/getUser";
+
 
 export default async function UserProfile() {
-	// Call validateRequest to get user and session
-	const currentUser = await getUser();
+	const { username, email ,id} = await getUser();
 
 	return (
 		<div className='flex flex-col space-y-2'>
 			{/* Display user's name */}
 			<p className='text-lg font-medium leading-none'>
-				{currentUser.username || "Anonmous"}
+				{username || "Anonmous"}
+			</p>
+         <p className='text-lg font-medium leading-none'>
+				{id || "Anonmous"}
 			</p>
 
 			{/* Display user's email */}
 			<p className='text-sm leading-none text-muted-foreground'>
-				{currentUser.email || "No email available"}
+				{email || "No email available"}
 			</p>
 		</div>
 	);

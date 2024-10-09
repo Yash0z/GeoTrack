@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { ClassesTable } from "../schema/schema";
+import { ClassesTable } from "../models/schema";
 import db from "../db";
 
 const app = new Hono().post("/", async (c) => {

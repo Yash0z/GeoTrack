@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 import { Toaster } from "@/components/ui/toaster";
 import Navbar from "@/components/Navbar";
-import { validateRequest } from "@/lib/lucia/auth";
 import Footer from "@/components/Footer";
+import getUser from "@/hooks/getUser";
 
 export const metadata: Metadata = {
 	title: "GeoTrack",
@@ -14,9 +14,8 @@ export default async function HomeLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	const { user } = await validateRequest();
-
-	if (!user) {
+	const { id } = await getUser();
+	if (!id) {
 		return "Please Sign in To Continue";
 	}
 	return (

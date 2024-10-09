@@ -27,6 +27,7 @@ import {
 import { z } from "zod";
 import { CreateClassSchema } from "@/types";
 import { LocateFixed } from "lucide-react";
+import getUser from "@/hooks/getUser";
 // Props for the class form
 interface CreateClassProps {
 	open: boolean;
@@ -51,7 +52,7 @@ export default function CreateClass({ open, onFormOpen }: CreateClassProps) {
 	});
 
 	// 2. Define a submit handler.
-	function onSubmit(values: z.infer<typeof CreateClassSchema>) {
+	async function onSubmit(values: z.infer<typeof CreateClassSchema>) {
 		// Do something with the form values.
 		// ✅ This will be type-safe and validated.
 		console.log(values);
@@ -115,14 +116,14 @@ export default function CreateClass({ open, onFormOpen }: CreateClassProps) {
 									Location
 								</Label>
 								<Button
-                        variant="outline"
+									variant='outline'
 									onClick={() => {
 										setMapOpen(true);
 									}}
 									className='w-60 p-3 font-ClashGrotex text-lg'
 								>
 									<LocateFixed />
-									<span className="m-2 text-lg">Select on map</span>
+									<span className='m-2 text-lg'>Select on map</span>
 								</Button>
 							</div>
 

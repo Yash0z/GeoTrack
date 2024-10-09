@@ -1,11 +1,11 @@
 import { redirect } from "next/navigation";
-import { validateRequest } from "@/lib/lucia/auth";
 import Dashboard from "@/components/DashBoard";
+import getUser from "@/hooks/getUser";
 
 export default async function AdminPage() {
-	const { user } = await validateRequest();
+	const { id } = await getUser();
 
-	if (!user) {
+	if (!id) {
 		return "Please Sign in To Continue";
 	}
 
