@@ -1,9 +1,9 @@
 "use server";
 
-import db from "@/backend/src/db";
+import db from "@/lib/db";
 import { lucia } from "@/lib/lucia/auth";
 import { validateRequest } from "@/lib/lucia/validateSession";
-import { userTable } from "@/backend/src/models/schema";
+import { userTable } from "@/lib/models/schema";
 import { SignUpSchema, LoginSchema } from "@/types";
 import { generateId } from "lucia";
 import { cookies } from "next/headers";

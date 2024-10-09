@@ -1,5 +1,5 @@
-import db from "@/backend/src/db";
-import { userTable } from "@/backend/src/models/schema";
+import db from "@/lib/db";
+import { userTable } from "@/lib/models/schema";
 import { validateRequest } from "../lib/lucia/validateSession";
 import { eq } from "drizzle-orm";
 import { Session, User } from "lucia";
