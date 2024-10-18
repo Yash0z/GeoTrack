@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer utilities {
+   .text-balance {
+      text-wrap: balance;
+   }
+}
+
+@layer base {
+   :root {
+      --background: 0, 0%, 88%;
+      --primary: 0, 0%, 25%;
+      --text: 0, 0%, 13%;
+      --text-muted: 0, 0%, 40%;
+      --secondary: 35, 96%, 54%;
+      --muted: 240 4.8% 95.9%;
+      --destructive: 0, 100%, 65%;
+      --constructive: 123, 97%, 67%;
+      --border: 0, 0%, 60%;
+      --hover1: 0, 2%, 82%;
+      --hover2: 35, 87%, 65%;
+   }
+
+
+}
+
+@layer base {
+   * {
+      @apply border-border;
+   }
+
+   body {
+      @apply bg-background;
+   }
+}
