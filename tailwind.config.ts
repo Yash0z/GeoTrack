@@ -28,6 +28,7 @@ const config: Config = {
 			},
 			colors: {
 				background: "hsl(var(--background))",
+				skeleton: "hsl(var(--skeleton))",
 				hover1: "hsl(var(--hover1))",
 				hover2: "hsl(var(--hover2))",
 				text: "hsl(var(--text))",

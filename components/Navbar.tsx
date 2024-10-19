@@ -13,8 +13,11 @@ import { Map, Settings, LogOut, Bell, Check, CheckCheck } from "lucide-react";
 import React from "react";
 import { Button } from "./ui/button";
 import { useLogout } from "@/features/auth/auth";
+import { getUser } from "@/features/user/useUser";
+import { Skeleton } from "./ui/skeleton";
 
 export default function Navbar() {
+	const { data, isLoading } = getUser();
 	const { mutate } = useLogout();
 	return (
 		<>
@@ -43,12 +46,23 @@ export default function Navbar() {
 							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent
-							className='w-56 font-Euclid bg-background border border-primary z-10 text-md'
+							className='w-72 h-40 flex flex-col justify-around font-Euclid bg-background border border-primary z-10 text-md'
 							align='end'
 							forceMount
 						>
 							<DropdownMenuLabel className='font-normal'>
-								{/* profile */}
+								{isLoading ? (
+									<>
+										{" "}
+										<Skeleton className='h-[15px] w-[60px] bg-skeleton rounded-xl mb-5' />
+										<Skeleton className='h-[15px] w-[200px] bg-skeleton rounded-xl' />
+									</>
+								) : (
+									<div className='text-xl px-2'>
+										<div>{data?.currentUser.username}</div>
+										<div>{data?.currentUser.email}</div>
+									</div>
+								)}
 							</DropdownMenuLabel>
 							<DropdownMenuSeparator />
 							{/* logout */}
@@ -57,10 +71,10 @@ export default function Navbar() {
 									onClick={() => mutate()}
 									variant='ghost'
 									size='sm'
-									className='w-full pr-28 '
+									className='w-full py-5 pr-40 bg-secondary hover:bg-hover2 border border-primary '
 								>
-									<span className='text-lg justify-center flex items-center gap-2'>
-										<LogOut size={48} />
+									<LogOut size={62} />
+									<span className='text-lg justify-center font-ClashGrotex flex items-center gap-2'>
 										Log out
 									</span>
 								</Button>

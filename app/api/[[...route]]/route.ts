@@ -57,20 +57,16 @@ app.use("*", async (c, next) => {
 });
 //
 
-app.get("/", async (c) => {
-	return c.json({
-		message: "Hello Next.js!",
-	});
-});
-
 // rotues
 import RegisterRouter from "./register";
 import loginRouter from "./login";
 import logoutRouter from "./logout";
+import userRouter from "./getUser";
 const route = app
 	.route("/login", loginRouter)
 	.route("/register", RegisterRouter)
-	.route("/logout", logoutRouter);
+	.route("/logout", logoutRouter)
+	.route("/user", userRouter);
 
 export const GET = handle(app);
 export const POST = handle(app);

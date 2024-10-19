@@ -3,7 +3,7 @@ import { Session, User } from "lucia";
 import { cookies } from "next/headers";
 import { cache } from "react";
 
-export const getUser = cache(
+export const validateSession = cache(
 	async (): Promise<
 		{ user: User; session: Session } | { user: null; session: null }
 	> => {

@@ -1,4 +1,4 @@
-import { getUser } from "@/backend/utils/validateRequest";
+import { validateSession } from "@/backend/utils/validateRequest";
 import Navbar from "@/components/Navbar";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
@@ -15,7 +15,7 @@ export default async function HomeLayout({
 }: {
 	children: React.ReactNode;
 }) {
-	const { user, session } = await getUser();
+	const { user, session } = await validateSession();
 	if (!user || !session || user.id !== session.userId) redirect("/login");
 
 	return (
