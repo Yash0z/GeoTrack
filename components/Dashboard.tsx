@@ -14,6 +14,7 @@ export default function Dashboard() {
 						Join Class
 					</Button>
 					<Button
+               
 						variant='outline'
 						className='text-lg  border-primary hover:bg-hover2 bg-secondary'
 					>

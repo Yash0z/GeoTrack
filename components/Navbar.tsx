@@ -9,9 +9,10 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Map, Settings, LogOut, Bell } from "lucide-react";
+import { Map, Settings, LogOut, Bell, Check, CheckCheck } from "lucide-react";
 import React from "react";
 import { Button } from "./ui/button";
+import { toast } from "@/hooks/use-toast";
 
 export default function Navbar() {
 	const handleClicke = (e: any) => {

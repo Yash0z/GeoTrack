@@ -1,5 +1,7 @@
+import { getUser } from "@/backend/utils/validateRequest";
 import Navbar from "@/components/Navbar";
 import { Metadata } from "next";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
 	title: {
@@ -13,6 +15,9 @@ export default async function HomeLayout({
 }: {
 	children: React.ReactNode;
 }) {
+	const { user, session } = await getUser();
+	if (!user || !session || user.id !== session.userId) redirect("/login");
+
 	return (
 		<div className='relative text-xl text-text h-screen w-full overflow-y-hidden font-ClashGrotex   '>
 			<div className='w-full z-10'>

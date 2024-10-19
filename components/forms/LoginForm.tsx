@@ -15,8 +15,12 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useLogin } from "@/features/auth/auth";
+import { toast } from "@/hooks/use-toast";
+import { CheckCheck } from "lucide-react";
 
 export default function LoginForm() {
+	const { mutate, isPending } = useLogin();
 	const form = useForm<z.infer<typeof LoginSchema>>({
 		resolver: zodResolver(LoginSchema),
 		defaultValues: {
@@ -27,8 +31,11 @@ export default function LoginForm() {
 	function onSubmit(values: z.infer<typeof LoginSchema>) {
 		// Do something with the form values.
 		// ✅ This will be type-safe and validated.
-		// mutate(values);
+		mutate(values);
 	}
+	//
+
+
 	return (
 		<>
 			<div className='w-[600px] p-8  space-y-10  '>
@@ -47,6 +54,7 @@ export default function LoginForm() {
 						className='space-y-12'
 					>
 						<FormField
+							disabled={isPending}
 							control={form.control}
 							name='username'
 							render={({ field }) => (
@@ -66,6 +74,7 @@ export default function LoginForm() {
 							)}
 						/>
 						<FormField
+							disabled={isPending}
 							control={form.control}
 							name='password'
 							render={({ field }) => (
@@ -85,6 +94,7 @@ export default function LoginForm() {
 							)}
 						/>
 						<Button
+							disabled={isPending}
 							className='w-full bg-secondary hover:bg-hover2 text-xl h-12 border border-primary '
 							type='submit'
 						>

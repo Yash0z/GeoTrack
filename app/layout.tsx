@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
-
+import { Toaster } from "@/components/ui/toaster";
 // LOCAL FONTS
 import localFont from "next/font/local";
+import TanstackProvider from "@/providers/TanstackProvider";
 const ClashGrotesk = localFont({
 	src: "../public/fonts/ClashGrotesk-Regular.woff2",
 	variable: "--font-ClashGrotesk",
@@ -36,8 +37,8 @@ export default function RootLayout({
 			<body
 				className={`${ClashGrotesk.variable} ${EuclidRegular.variable} ${Satoshi_B.variable} antialiased`}
 			>
-            
-				{children}
+				<TanstackProvider>{children}</TanstackProvider>
+				<Toaster />
 			</body>
 		</html>
 	);

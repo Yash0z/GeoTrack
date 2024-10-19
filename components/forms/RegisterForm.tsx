@@ -15,20 +15,30 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { register } from "module";
+import { useRegister } from "@/features/auth/auth";
+import { CheckCheck } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
 
 export default function RegisterForm() {
+   
+	const { mutate, isPending } = useRegister();
+
+
 	const form = useForm<z.infer<typeof RegisterSchema>>({
 		resolver: zodResolver(RegisterSchema),
 		defaultValues: {
 			username: "",
+			email: "",
 			password: "",
 		},
 	});
 	function onSubmit(values: z.infer<typeof RegisterSchema>) {
-		// Do something with the form values.
-		// ✅ This will be type-safe and validated.
-		// mutate(values);
+		mutate(values);
 	}
+
+
+
 	return (
 		<>
 			<div className='w-[600px] p-8  space-y-10  '>
@@ -47,6 +57,7 @@ export default function RegisterForm() {
 						className='space-y-12'
 					>
 						<FormField
+							disabled={isPending}
 							control={form.control}
 							name='username'
 							render={({ field }) => (
@@ -66,6 +77,7 @@ export default function RegisterForm() {
 							)}
 						/>
 						<FormField
+							disabled={isPending}
 							control={form.control}
 							name='email'
 							render={({ field }) => (
@@ -85,6 +97,7 @@ export default function RegisterForm() {
 							)}
 						/>
 						<FormField
+							disabled={isPending}
 							control={form.control}
 							name='password'
 							render={({ field }) => (
@@ -105,6 +118,7 @@ export default function RegisterForm() {
 						/>
 
 						<Button
+							disabled={isPending}
 							className='w-full bg-secondary hover:bg-hover2 text-xl h-12 border border-primary '
 							type='submit'
 						>
