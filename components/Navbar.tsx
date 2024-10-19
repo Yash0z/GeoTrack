@@ -12,13 +12,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Map, Settings, LogOut, Bell, Check, CheckCheck } from "lucide-react";
 import React from "react";
 import { Button } from "./ui/button";
-import { toast } from "@/hooks/use-toast";
+import { useLogout } from "@/features/auth/auth";
 
 export default function Navbar() {
-	const handleClicke = (e: any) => {
-		e.preventDefault();
-		console.log("clicked");
-	};
+	const { mutate } = useLogout();
 	return (
 		<>
 			<header className='px-4 lg:px-6 h-16  font-Euclid flex items-center border-b'>
@@ -54,9 +51,10 @@ export default function Navbar() {
 								{/* profile */}
 							</DropdownMenuLabel>
 							<DropdownMenuSeparator />
+							{/* logout */}
 							<DropdownMenuItem>
 								<Button
-									onClick={handleClicke}
+									onClick={() => mutate()}
 									variant='ghost'
 									size='sm'
 									className='w-full pr-28 '

@@ -1,7 +1,5 @@
 import { Hono } from "hono";
 import { handle } from "hono/vercel";
-import RegisterRouter from "./register";
-import loginRouter from "./login";
 import { csrf } from "hono/csrf";
 import { getCookie } from "hono/cookie";
 import { lucia } from "@/backend/utils/lucia";
@@ -9,16 +7,12 @@ import { User, Session, verifyRequestOrigin } from "lucia";
 import { cors } from "hono/cors";
 import { Context } from "@/backend/utils/context";
 
-
 // export const runtime = "edge";
 
 const app = new Hono<Context>().basePath("/api");
 app.use("/api/*", cors());
 
-
-
 // middleware for validation
-// app.use(csrf());
 // app.use("*", async (c, next) => {
 // 	if (c.req.method === "GET") {
 // 		return next();
@@ -68,9 +62,15 @@ app.get("/", async (c) => {
 		message: "Hello Next.js!",
 	});
 });
+
+// rotues
+import RegisterRouter from "./register";
+import loginRouter from "./login";
+import logoutRouter from "./logout";
 const route = app
 	.route("/login", loginRouter)
-	.route("/register", RegisterRouter);
+	.route("/register", RegisterRouter)
+	.route("/logout", logoutRouter);
 
 export const GET = handle(app);
 export const POST = handle(app);

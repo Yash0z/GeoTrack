@@ -11,9 +11,6 @@ type RegisterRequestType = InferRequestType<
 	typeof client.api.register.$post
 >["json"];
 
-type LoginResponseType = InferResponseType<typeof client.api.login.$post>;
-type LoginRequestType = InferRequestType<typeof client.api.login.$post>["json"];
-
 // register
 export const useRegister = () => {
 	const router = useRouter();
@@ -45,6 +42,9 @@ export const useRegister = () => {
 };
 
 //login
+type LoginResponseType = InferResponseType<typeof client.api.login.$post>;
+type LoginRequestType = InferRequestType<typeof client.api.login.$post>["json"];
+
 export const useLogin = () => {
 	const { toast } = useToast();
 	const router = useRouter();
@@ -72,6 +72,39 @@ export const useLogin = () => {
 				variant: "destructive",
 				title: "Uh oh! Invalid Credentials",
 				description: "please enter correct credentials",
+			});
+		},
+	});
+	return query;
+};
+
+// logout
+export const useLogout = () => {
+	const { toast } = useToast();
+	const router = useRouter();
+	const query = useMutation({
+		mutationKey: ["logout"],
+		mutationFn: async (json) => {
+			const res = await client.api.logout.$post();
+
+			if (!res.ok) {
+				throw new Error("Server Error");
+			}
+
+			// If response is okay, return the parsed JSON result
+			return await res.json();
+		},
+		onSuccess: () => {
+			toast({
+				variant: "default",
+				title: "Logout successful",
+			});
+			router.push("/login");
+		},
+		onError: () => {
+			toast({
+				variant: "destructive",
+				title: "Uh oh! something went wrong",
 			});
 		},
 	});
