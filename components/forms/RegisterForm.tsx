@@ -67,7 +67,7 @@ export default function RegisterForm() {
 									</FormLabel>
 									<FormControl>
 										<Input
-											className='h-12 text-lg bg-background'
+											className='h-12 text-lg'
 											placeholder='your@username'
 											{...field}
 										/>

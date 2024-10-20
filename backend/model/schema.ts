@@ -18,11 +18,13 @@ export const sessionTable = pgTable("session", {
 	}).notNull(),
 });
 
-// export const ClassesTable = pgTable("classes", {
-// 	id: text("id").primaryKey(), // UUID auto-generation
-// 	AuthorID: text("user_id")
-// 		.notNull()
-// 		.references(() => userTable.id),
-// 	classname: text("classname").notNull(),
-// 	description: text("description"),
-// });
+export const ClassesTable = pgTable("classes", {
+	id: text("id").primaryKey(),
+	AuthorID: text("user_id")
+		.notNull()
+		.references(() => userTable.id),
+	classname: text("classname").notNull(),
+	description: text("description"),
+	code: text("classcode").primaryKey(),
+   // map coordinates
+});

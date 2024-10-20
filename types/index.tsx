@@ -14,9 +14,9 @@ export const LoginSchema = z.object({
 	password: z.string(),
 });
 
-// export const CreateClassSchema = z.object({
-// 	classname: z.string().min(2, {
-// 		message: "Username must be at least 2 characters.",
-// 	}),
-// 	description: z.string().min(2),
-// });
+export const ClassSchema = z.object({
+	classname: z.string().min(2, {
+		message: "Username must be at least 2 characters.",
+	}),
+	description: z.string().min(2),
+});

@@ -64,7 +64,7 @@ export default function LoginForm() {
 									</FormLabel>
 									<FormControl>
 										<Input
-											className='h-12 text-lg bg-background'
+											className='h-12 text-lg '
 											placeholder='your@username'
 											{...field}
 										/>
@@ -84,7 +84,7 @@ export default function LoginForm() {
 									</FormLabel>
 									<FormControl>
 										<Input
-											className='h-12 text-lg bg-background'
+											className='h-12 text-lg'
 											placeholder='password'
 											{...field}
 										/>
