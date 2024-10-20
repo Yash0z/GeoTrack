@@ -21,3 +21,4 @@ export const getUser = () => {
 	});
 	return query;
 };
+

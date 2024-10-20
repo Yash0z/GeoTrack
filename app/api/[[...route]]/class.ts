@@ -5,15 +5,41 @@ import db from "@/backend/db";
 import { ClassesTable } from "@/backend/model/schema";
 import { ClassSchema } from "@/types";
 import { Context } from "@/backend/utils/context";
+import { eq } from "drizzle-orm";
 
-const app = new Hono<Context>().post(
-	"/",
-	zValidator("json", ClassSchema),
-	async (c) => {
+const app = new Hono<Context>()
+	.get("/", async (c) => {
 		const session = c.get("session");
 		const user = c.get("user");
 		console.log(session);
 		console.log(user);
+		if (!session || !user) {
+			return c.json({ error: "no user or session" }, 400);
+		}
+		const currentUserClasses = await db.query.ClassesTable.findMany({
+			where: (table) => eq(table.AuthorID, user.id),
+			columns: {
+				classname: true,
+				description: true,
+				code: true,
+			},
+		});
+		if (!currentUserClasses) {
+			return c.json({ error: "no Classes" }, 400);
+		}
+
+		if (
+			!Array.isArray(currentUserClasses) ||
+			currentUserClasses.length === 0
+		) {
+			return c.json([], 200);
+		}
+
+		return c.json(currentUserClasses, 200);
+	})
+	.post("/", zValidator("json", ClassSchema), async (c) => {
+		const session = c.get("session");
+		const user = c.get("user");
 		if (!session || !user) {
 			return c.json({ error: "no user or session" }, 400);
 		}
@@ -38,6 +64,5 @@ const app = new Hono<Context>().post(
 			});
 
 		return c.json({ data });
-	}
-);
+	});
 export default app;
