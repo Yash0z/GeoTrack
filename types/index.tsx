@@ -19,4 +19,10 @@ export const ClassSchema = z.object({
 		message: "Username must be at least 2 characters.",
 	}),
 	description: z.string().min(2),
+	coordinates: z.array(
+		z.tuple([
+			z.number().min(-90).max(90), 
+			z.number().min(-180).max(180), 
+		])
+	),
 });

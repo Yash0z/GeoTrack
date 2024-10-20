@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -26,13 +27,22 @@ import { ClassSchema } from "@/types";
 import { Map } from "../map/map";
 import { LatLng } from "leaflet";
 import { LocateFixed, MapPin } from "lucide-react";
+import { useClass } from "@/features/class/useClass";
 
 export default function ClassForm({ trigger }: { trigger: ReactNode }) {
+	//
+	const { mutate, isPending } = useClass();
+
 	// map coordinates
-	const [coordinates, setCoordinates] = useState<
-		LatLng | LatLng[] | LatLng[][] | LatLng[][][]
-	>([]);
+	const [coordinates, setCoordinates] = useState<LatLng[]>([]);
 	const [isMapOpen, setIsMapOpen] = useState(false);
+	const [isOpen, setIsOpen] = useState(false);
+
+	// function to convert to num[][]
+	const formattedCoordinates = coordinates.map((latLng) => [
+		latLng.lat, // Latitude
+		latLng.lng, // Longitude
+	]) as [number, number][];
 
 	// dialog state
 	const closeMapDialog = () => {
@@ -45,16 +55,25 @@ export default function ClassForm({ trigger }: { trigger: ReactNode }) {
 		defaultValues: {
 			classname: "",
 			description: "",
+			coordinates: [],
 		},
 	});
 
 	async function onSubmit(values: z.infer<typeof ClassSchema>) {
-		console.log(values);
-		console.log(coordinates);
+		const data = {
+			...values,
+			coordinates: formattedCoordinates,
+		};
+		mutate(data);
+		if (!isPending) {
+			setIsOpen(false);
+		}
+		form.reset();
+		setCoordinates([]);
 	}
 
 	return (
-		<Dialog>
+		<Dialog open={isOpen} onOpenChange={setIsOpen}>
 			<DialogTrigger asChild>{trigger}</DialogTrigger>
 			<DialogContent>
 				<DialogHeader>
@@ -78,7 +97,7 @@ export default function ClassForm({ trigger }: { trigger: ReactNode }) {
 									</FormLabel>
 									<FormControl>
 										<Input
-											className='h-12 text-lg '
+											className='h-12 text-md'
 											placeholder='your@classname'
 											{...field}
 										/>
@@ -98,7 +117,7 @@ export default function ClassForm({ trigger }: { trigger: ReactNode }) {
 									</FormLabel>
 									<FormControl>
 										<Input
-											className='h-12 text-lg '
+											className='h-12 text-md '
 											placeholder='your@description'
 											{...field}
 										/>
@@ -107,7 +126,6 @@ export default function ClassForm({ trigger }: { trigger: ReactNode }) {
 								</FormItem>
 							)}
 						/>
-						{/* Map Dialog */}
 						<div>
 							<Dialog open={isMapOpen} onOpenChange={setIsMapOpen}>
 								<h1 className='text-xl font-ClashGrotex mb-4 text-primary'>
@@ -132,16 +150,17 @@ export default function ClassForm({ trigger }: { trigger: ReactNode }) {
 							</Dialog>
 						</div>
 						{/* submit */}
-						<div className='relative w-full'>
-							<Button
-								type='submit'
-								className='w-full p-5 bg-secondary border-primary border font-ClashGrotex text-xl hover:bg-hover2'
-							>
-								Save Class
-							</Button>
-						</div>
+
+						<Button
+							disabled={isPending}
+							type='submit'
+							className='w-full   p-5 bg-secondary border-primary border font-ClashGrotex text-xl hover:bg-hover2'
+						>
+							Save Class
+						</Button>
 					</form>
 				</Form>
+				{/* Map Dialog */}
 			</DialogContent>
 		</Dialog>
 	);

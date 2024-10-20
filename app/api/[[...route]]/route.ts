@@ -62,11 +62,13 @@ import RegisterRouter from "./register";
 import loginRouter from "./login";
 import logoutRouter from "./logout";
 import userRouter from "./getUser";
+import classRouter from "./class";
 const route = app
 	.route("/login", loginRouter)
 	.route("/register", RegisterRouter)
 	.route("/logout", logoutRouter)
-	.route("/user", userRouter);
+	.route("/user", userRouter)
+	.route("/class", classRouter);
 
 export const GET = handle(app);
 export const POST = handle(app);

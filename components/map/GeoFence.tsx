@@ -7,9 +7,7 @@ import "leaflet-draw/dist/leaflet.draw.css";
 import { Button } from "../ui/button";
 
 const DrawPolygon: React.FC<{
-	setMapCoordinates: (
-		coords: LatLng | LatLng[] | LatLng[][] | LatLng[][][]
-	) => void;
+	setMapCoordinates: (coords: LatLng[]) => void;
 }> = ({ setMapCoordinates }) => {
 	const map = useMap();
 
@@ -34,12 +32,22 @@ const DrawPolygon: React.FC<{
 			const layer = event.layer;
 			drawnItems.addLayer(layer);
 
-			if (layer instanceof L.Polygon) {
-				const coords = layer.getLatLngs()[0];
-				setMapCoordinates(coords);
-			} else if (layer instanceof L.Rectangle) {
+			if (layer instanceof L.Polygon || layer instanceof L.Rectangle) {
+				// Get the latLngs and flatten them
 				const coords = layer.getLatLngs();
-				setMapCoordinates(coords);
+
+				// Function to flatten LatLng arrays
+				const flattenCoords = (latlngs: any): LatLng[] => {
+					if (latlngs instanceof L.LatLng) {
+						return [latlngs];
+					} else if (Array.isArray(latlngs)) {
+						return latlngs.flatMap(flattenCoords); // Recursively flatten arrays
+					}
+					return [];
+				};
+
+				const flattenedCoords = flattenCoords(coords);
+				setMapCoordinates(flattenedCoords);
 			}
 		});
 
@@ -54,17 +62,13 @@ const DrawPolygon: React.FC<{
 };
 
 const Geofence: React.FC<{
-	setMapCoordinates: (
-		coords: LatLng | LatLng[] | LatLng[][] | LatLng[][][]
-	) => void;
+	setMapCoordinates: (coords: LatLng[]) => void;
 	closeDialog: () => void;
 }> = ({ setMapCoordinates, closeDialog }) => {
-	const [localCoords, setLocalCoords] = useState<
-		LatLng | LatLng[] | LatLng[][] | LatLng[][][]
-	>([]);
+	const [localCoords, setLocalCoords] = useState<LatLng[]>([]);
 	const handleSaveCoordinates = () => {
 		setMapCoordinates(localCoords);
-		closeDialog(); 
+		closeDialog();
 	};
 	return (
 		<div>

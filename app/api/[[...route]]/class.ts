@@ -12,13 +12,15 @@ const app = new Hono<Context>().post(
 	async (c) => {
 		const session = c.get("session");
 		const user = c.get("user");
-
+		console.log(session);
+		console.log(user);
 		if (!session || !user) {
-			return c.json({ error: "Unauthorized" }, 401);
+			return c.json({ error: "no user or session" }, 400);
 		}
 		const values = c.req.valid("json");
 		const userId = generateId(10);
 		const classcode = generateId(5);
+		// console.log(values.coordinates);
 		const [data] = await db
 			.insert(ClassesTable)
 			.values({
@@ -27,12 +29,12 @@ const app = new Hono<Context>().post(
 				classname: values.classname,
 				description: values.description,
 				code: classcode,
+				coordinates: values.coordinates,
 			})
 			.returning({
 				id: ClassesTable.id,
 				AuthorId: ClassesTable.AuthorID,
 				username: ClassesTable.classname,
-				description: ClassesTable.description,
 			});
 
 		return c.json({ data });
