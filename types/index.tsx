@@ -20,9 +20,10 @@ export const ClassSchema = z.object({
 	}),
 	description: z.string().min(2),
 	coordinates: z.array(
-		z.tuple([
-			z.number().min(-90).max(90), 
-			z.number().min(-180).max(180), 
-		])
+		z.tuple([z.number().min(-90).max(90), z.number().min(-180).max(180)])
 	),
+});
+
+export const ClassMemberSchema = z.object({
+	classId: z.string().min(2),
 });

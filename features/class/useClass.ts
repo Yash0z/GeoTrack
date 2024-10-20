@@ -49,3 +49,36 @@ export const useClass = () => {
 	});
 	return query;
 };
+
+type joinResponseType = InferResponseType<typeof client.api.class.join.$post>;
+type joinRequestType = InferRequestType<
+	typeof client.api.class.join.$post
+>["json"];
+export const joinClass = () => {
+	const queryClient = useQueryClient();
+	const query = useMutation<joinResponseType, Error, joinRequestType>({
+		mutationKey: ["joinclass"],
+		mutationFn: async (json) => {
+			const res = await client.api.class.join.$post({ json });
+			if (!res.ok) {
+				throw new Error("server error");
+			}
+			return await res.json();
+		},
+
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["classes"] });
+			toast({
+				variant: "default",
+				title: "Class Joined Successfully!!!",
+			});
+		},
+		onError: () => {
+			toast({
+				variant: "destructive",
+				title: "Uh oh! Something went wrong.",
+			});
+		},
+	});
+	return query;
+};

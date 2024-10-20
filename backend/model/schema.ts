@@ -4,6 +4,7 @@ import {
 	pgTable,
 	text,
 	timestamp,
+	uniqueIndex,
 	uuid,
 } from "drizzle-orm/pg-core";
 
@@ -35,3 +36,23 @@ export const ClassesTable = pgTable("classes", {
 	code: text("classcode").unique().notNull(),
 	coordinates: jsonb().notNull(),
 });
+
+export const ClassMembers = pgTable(
+	"class_memberships",
+	{
+		id: text("id").primaryKey(),
+		userId: text("user_id").references(() => userTable.id, {
+			onDelete: "cascade",
+		}),
+		classId: text("class_id").references(() => ClassesTable.code, {
+			onDelete: "cascade",
+		}),
+		joinedAt: timestamp("joined_at").defaultNow(),
+	},
+	(table) => ({
+		userClassUnique: uniqueIndex("user_class_unique").on(
+			table.userId,
+			table.classId
+		), // Unique constraint to prevent duplicate entries
+	})
+);

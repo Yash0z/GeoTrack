@@ -8,6 +8,7 @@ import { getClass } from "@/features/class/useClass";
 import ClassCard from "./ClassCard";
 import SkeletonCard from "./ui/skeletonCard";
 import { Separator } from "@radix-ui/react-dropdown-menu";
+import JoinForm from "./forms/JoinForm";
 
 export default function Dashboard() {
 	const { data, isLoading } = getUser();
@@ -27,10 +28,18 @@ export default function Dashboard() {
 					)}
 				</span>
 				<div className='flex gap-4 '>
-					<Button variant='outline' className='text-lg hover:bg-hover1'>
-						<UserPlus />
-						Join Class
-					</Button>
+					<JoinForm
+						trigger={
+							<Button
+								variant='outline'
+								className='text-lg hover:bg-hover1'
+							>
+								<UserPlus />
+								Join Class
+							</Button>
+						}
+					/>
+
 					{/* Class creation Form */}
 					<ClassForm
 						trigger={
